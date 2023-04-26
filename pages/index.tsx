@@ -10,7 +10,7 @@ export default function Home() {
   const [imgUrl, setImgUrl] = useState('')
 
 
-  const upload = async (res) => {
+  const upload = async (res:any) => {
     // console.log(res)
     const data = new FormData();
     data.append('file', res);
