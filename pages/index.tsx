@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '@/styles/index.module.scss'
-import { Button, Dialog, Toast, TextArea, ImageUploader } from 'antd-mobile'
+import { Button, Dialog, Toast, TextArea, ImageUploader, ImageUploadItem } from 'antd-mobile'
 import axios from 'axios'
 import { useState } from 'react'
 export default function Home() {
@@ -9,8 +9,8 @@ export default function Home() {
   const [remark, setRemark] = useState('')
   const [imgUrl, setImgUrl] = useState('')
 
-  const upload = async (res: any) => {
-    return new Promise((resolve, reject) => {
+  const upload = async (res: File) => {
+    return new Promise<ImageUploadItem>((resolve, reject) => {
       console.log(res)
       const img = new Image()
       img.src = URL.createObjectURL(res)
@@ -24,9 +24,7 @@ export default function Home() {
         canvas.height = img.height;
         ctx?.drawImage(img, 0, 0, img.width, img.height);
         canvas.toBlob(async (blob) => {
-          console.log(blob)
           const file = new File([blob as BlobPart], '23123123123.png', { type: blob!.type })
-          console.log(file)
           const data = new FormData();
           data.append('file', file);
           try {
