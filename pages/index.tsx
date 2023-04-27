@@ -6,6 +6,7 @@ import { useState } from 'react'
 export default function Home() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
   const [remark, setRemark] = useState('')
   const [imgUrl, setImgUrl] = useState('')
 
@@ -63,6 +64,7 @@ export default function Home() {
           method: 'post',
           url: '/api/active/add',
           data: {
+            work_name: name,
             listen: email,
             name: username,
             image_url: imgUrl,
@@ -88,8 +90,9 @@ export default function Home() {
       </Head>
       <div>
         <form className={styles.form}>
-          <input onChange={({ target: { value } }) => { setUsername(value) }} type="text" id="name" name="name" placeholder="请输入你的昵称" />
-          <input onChange={({ target: { value } }) => { setEmail(value) }} id="email" name="email" placeholder="请输入你的联系方式，例如：微信：xxxxxx" />
+          <input onChange={({ target: { value } }) => { setUsername(value) }} type="text" placeholder="请输入你的昵称" />
+          <input onChange={({ target: { value } }) => { setName(value) }} placeholder="请输入您作品的名字" />
+          <input onChange={({ target: { value } }) => { setEmail(value) }} placeholder="请输入你的联系方式，例如：微信：xxxxxx" />
           <TextArea onChange={(value) => { setRemark(value) }} placeholder="请输入对这张照片的简单描述" />
           <ImageUploader maxCount={1} upload={upload} />
           <Button block onClick={submitInfo} color='primary' size='large'>提交</Button>
