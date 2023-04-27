@@ -24,7 +24,7 @@ export default function Home() {
         canvas.height = img.height;
         ctx?.drawImage(img, 0, 0, img.width, img.height);
         canvas.toBlob(async (blob) => {
-          const file = new File([blob as BlobPart], '23123123123.png', { type: blob!.type })
+          const file = new File([blob as BlobPart], `23123123123.${blob!.type.split('/')[1]}`, { type: blob!.type })
           const data = new FormData();
           data.append('file', file);
           try {
@@ -36,7 +36,7 @@ export default function Home() {
             // console.log(response,`https://www.nfcmdx.top/api/${response.data.url}`)
             setImgUrl(response.data.url);
             resolve({
-              url: `https://www.nfcmdx.top/api${response.data.url}`
+              url: `https://www.nfcmdx.top/images${response.data.url}`
             })
           } catch (ex: any) {
             Toast.show(ex?.message)
