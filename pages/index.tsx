@@ -25,25 +25,25 @@ export default function Home() {
         ctx?.drawImage(img, 0, 0, img.width, img.height);
         canvas.toBlob(async (blob) => {
           console.log(blob)
-          const file = new File([blob], '23123123123.png', { type: blob.type })
+          const file = new File([blob as BlobPart], '23123123123.png', { type: blob!.type })
           console.log(file)
           const data = new FormData();
           data.append('file', file);
           try {
             const response = await axios({
-            url: '/api/active/upload',
-            method: 'post',
-            data
-          });
-          // console.log(response,`https://www.nfcmdx.top/api/${response.data.url}`)
-          setImgUrl(response.data.url);
-          resolve({
-            url: `https://www.nfcmdx.top/api${response.data.url}`
-          })
-          }catch (ex) {
-            Toast.show(ex.message)
+              url: '/api/active/upload',
+              method: 'post',
+              data
+            });
+            // console.log(response,`https://www.nfcmdx.top/api/${response.data.url}`)
+            setImgUrl(response.data.url);
+            resolve({
+              url: `https://www.nfcmdx.top/api${response.data.url}`
+            })
+          } catch (ex: any) {
+            Toast.show(ex?.message)
           }
-          
+
         }, res.type, 0.6)
       }
 
