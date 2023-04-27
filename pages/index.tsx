@@ -9,29 +9,54 @@ export default function Home() {
   const [remark, setRemark] = useState('')
   const [imgUrl, setImgUrl] = useState('')
 
+  const upload = async (res: any) => {
+    return new Promise((resolve, reject) => {
+      console.log(res)
+      const img = new Image()
+      img.src = URL.createObjectURL(res)
 
-  const upload = async (res) => {
-    // console.log(res)
-    const data = new FormData();
-    data.append('file', res);
-    const response = await axios({
-      url: '/api/active/upload',
-      method: 'post',
-      data
-    });
-    // console.log(response,`https://www.nfcmdx.top/api/${response.data.url}`)
-    setImgUrl(response.data.url);
-    return {
-      url: `https://www.nfcmdx.top/api${response.data.url}`
-    }
+      console.log(res, img)
+
+      img.onload = async () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d')
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx?.drawImage(img, 0, 0, img.width, img.height);
+        canvas.toBlob(async (blob) => {
+          console.log(blob)
+          const file = new File([blob], '23123123123.png', { type: blob.type })
+          console.log(file)
+          const data = new FormData();
+          data.append('file', file);
+          try {
+            const response = await axios({
+            url: '/api/active/upload',
+            method: 'post',
+            data
+          });
+          // console.log(response,`https://www.nfcmdx.top/api/${response.data.url}`)
+          setImgUrl(response.data.url);
+          resolve({
+            url: `https://www.nfcmdx.top/api${response.data.url}`
+          })
+          }catch (ex) {
+            Toast.show(ex.message)
+          }
+          
+        }, res.type, 0.6)
+      }
+
+    })
+
   }
   const submitInfo = () => {
     // console.log(email,username,remark)
-    if(!username||!email||!imgUrl||!remark){
+    if (!username || !email || !imgUrl || !remark) {
       Dialog.alert({
         content: "全部内容都要填写哦，检查一下吧！"
       })
-      return 
+      return
     }
     Dialog.confirm({
       content: '上传的内容不得包含色情，反动等违反国家法律的内容，我们将对您上传的内容进行严格审核，确认提交吗？',
@@ -53,7 +78,7 @@ export default function Home() {
         })
       },
     })
-    
+
   }
   return (
     <>
