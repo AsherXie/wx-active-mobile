@@ -19,3 +19,12 @@
      background-position: 0% 50%;
     }
    }
+
+   .icp {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 45px;
+   }
