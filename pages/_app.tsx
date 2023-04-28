@@ -7,9 +7,6 @@ export default function App({ Component, pageProps }: AppProps) {
   console.log(process.env.NODE_ENV);
   return (
     <Layout>
-      {1212}
-      {1212}
-      {121212}
       <Component {...pageProps} />
     </Layout>
   );
