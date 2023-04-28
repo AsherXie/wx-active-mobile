@@ -1,5 +1,5 @@
 
-export default function Layout({ children }) {
+export default function Layout({ children }:any) {
     return <>
       {children}
       <div className='icp'>
