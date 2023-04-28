@@ -1,3 +1,120 @@
+// module.exports = {
+//   env: {
+//     browser: true,
+//     es2021: true,
+//   },
+//   extends: [
+//     "eslint:recommended",
+//     "plugin:react/recommended",
+//     "plugin:@next/next/recommended",
+//   ],
+//   parserOptions: {
+//     ecmaFeatures: {
+//       jsx: true,
+//     },
+//     ecmaVersion: 12,
+//     sourceType: "module",
+//   },
+//   plugins: [ "react", "@next/next" ],
+//   rules: {
+//     semi: [ "error", "always" ], // 强制使用分号
+//     "no-trailing-spaces": "error", // 禁止行末空格
+//     "no-multiple-empty-lines": [ "error", { max: 1 } ], // 禁止多余的空行
+//     "no-unused-vars": [ "error", { argsIgnorePattern: "^_" } ], // 禁止未使用的变量，但允许以 _ 开头的变量未使用
+//     "react/react-in-jsx-scope": "off", // 不强制要求在 JSX 中引入 React
+//     "@next/next/no-img-element": "off", // 不强制要求使用 next/image 组件
+//     "object-curly-spacing": [ "error", "always" ], // 对象属性使用空格，比如 { foo: 'bar' }
+//     "array-bracket-spacing": [ "error", "always" ], // 数组元素使用空格，比如 [1, 2, 3]
+//     "computed-property-spacing": [ "error", "always" ], // 计算属性使用空格，比如 obj[expr]
+//     "template-curly-spacing": [ "error", "always" ], // 模板字符串中使用空格，比如 `Hello, ${name}!`
+//     "no-multi-spaces": "error", // 禁止多余的空格
+//     "no-extra-semi": "error", // 禁止额外的分号
+//     "semi-spacing": [ "error", { before: false, after: true } ], // 分号前不允许有空格，后必须有空格
+//     "space-before-blocks": [ "error", "always" ], // 块级语句必须在语句前空一格
+//     "space-in-parens": [ "error", "never" ], // 括号内不允许有空格
+//     "space-infix-ops": "error", // 操作符前后必须有空格
+//     "space-unary-ops": "error", // 一元操作符后必须有空格
+//     "spaced-comment": [ "error", "always" ], // 注释前必须有空格
+//     "jsx-quotes": [ "error", "prefer-double" ], // JSX 中使用双引号
+//     "react/jsx-curly-spacing": [ "error", { when: "always", children: true } ], // JSX 中花括号前后都要有空格
+//     "react/jsx-props-no-spreading": "off", // 允许使用 spread 属性
+//     "react/prop-types": "off", // 不强制要求使用 PropTypes 进行类型检查
+//     "react/jsx-filename-extension": [ "error", { extensions: [ ".js", ".jsx" ] } ], // 只在 .js 和 .jsx 文件中使用 JSX
+//   },
+//   settings: { react: { version: "detect" } },
+// };
+
+
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next",
+    "next/core-web-vitals"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "prettier",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "no-extra-boolean-cast": "error",
+    "no-extra-parens": "error",
+    "no-extra-semi": "error",
+    "no-multi-spaces": "error",
+    "no-multiple-empty-lines": ["error", {"max": 1, "maxEOF": 1, "maxBOF": 0}],
+    "@typescript-eslint/no-unused-vars": ["error", {"argsIgnorePattern": "^_", "ignoreRestSiblings": true}],
+    "semi": ["error", "always"],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/prefer-as-const": "error",
+    "no-trailing-spaces": "error", // 禁止行末空格
+    "no-unused-vars": [ "error", { "argsIgnorePattern": "^_" } ], // 禁止未使用的变量，但允许以 _ 开头的变量未使用
+    "react/react-in-jsx-scope": "off", // 不强制要求在 JSX 中引入 React
+    "@next/next/no-img-element": "off", // 不强制要求使用 next/image 组件
+    "object-curly-spacing": [ "error", "always" ], // 对象属性使用空格，比如 { foo: 'bar' }
+    // "array-bracket-spacing": ["error", "always", {
+    //   "singleValue": true,
+    //   "objectsInArrays": true,
+    //   "arraysInArrays": true
+    // }], // 数组元素使用空格，比如 [1, 2, 3]
+    "key-spacing": ["error", {
+      "beforeColon": false,
+      "afterColon": true,
+      "mode": "strict"
+    }],
+    // "computed-property-spacing": [ "error", "always" ], // 计算属性使用空格，比如 obj[expr]
+    // "template-curly-spacing": [ "error", "always" ], // 模板字符串中使用空格，比如 `Hello, ${name}!`
+    "semi-spacing": [ "error", { "before": false, "after": true } ], // 分号前不允许有空格，后必须有空格
+    "space-before-blocks": [ "error", "always" ], // 块级语句必须在语句前空一格
+    "space-in-parens": [ "error", "never" ], // 括号内不允许有空格
+    "space-infix-ops": "error", // 操作符前后必须有空格
+    "space-unary-ops": "error", // 一元操作符后必须有空格
+    "spaced-comment": [ "error", "always" ], // 注释前必须有空格
+    // "react/jsx-curly-spacing": [ "error", { "when": "always", "children": true } ], // JSX 中花括号前后都要有空格
+    "react/jsx-props-no-spreading": "off", // 允许使用 spread 属性
+    "no-constant-condition": 2,
+    "react/prop-types": "off" // 不强制要求使用 PropTypes 进行类型检查
+    // "react/jsx-filename-extension": [ "error", { "extensions": [ ".js", ".jsx" ] } ] // 只在 .js 和 .jsx 文件中使用 JSX
+  }
 }
