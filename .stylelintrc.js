@@ -6,7 +6,6 @@ module.exports = {
     "selector-pseudo-class-no-unknown": [ true, {
       ignorePseudoClasses: [":global"],
     } ],
-
     'color-no-invalid-hex': true,
 
     'font-family-no-missing-generic-family-keyword': true,
@@ -46,8 +45,6 @@ module.exports = {
     'no-extra-semicolons': true,
 
     'no-invalid-double-slash-comments': true, // Limit language features
-
-    'unit-blacklist': [],
 
     'shorthand-property-no-redundant-values': true,
 
