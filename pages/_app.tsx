@@ -4,6 +4,7 @@ import '@/styles/normalize.css';
 import Layout from '@/components/layouts';
 export default function App({ Component, pageProps }: AppProps) {
   // const a = 0;
+  // const a = 1;
   console.log(process.env.NODE_ENV);
   return (
     <Layout>
