@@ -2,11 +2,6 @@
   "name": "wewe",
   "version": "0.1.0",
   "private": true,
-  "lint-staged": {
-    "**/*.{ts,tsx,js,jsx}": [
-      "eslint ."
-    ]
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
