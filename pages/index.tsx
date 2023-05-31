@@ -10,12 +10,32 @@ import {
 } from 'antd-mobile';
 import axios from 'axios';
 import { useState } from 'react';
+import useCountDown from '@/hooks/useCountdown';
 export default function Home() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [emailCode, setEmailCode] = useState('');
+
+  const { text, time, startCountDown } = useCountDown(60);
+
   const [name, setName] = useState('');
   const [remark, setRemark] = useState('');
   const [imgUrl, setImgUrl] = useState('');
+
+  const sendEmail = () => {
+    if (email) {
+      axios({
+        method: 'POST',
+        url: '/api/sendcode',
+        data: {
+          email,
+          emailCode,
+        },
+      }).then(() => {
+        startCountDown();
+      });
+    }
+  };
 
   const upload = async (res: File) => {
     return new Promise<ImageUploadItem>((resolve) => {
@@ -42,7 +62,7 @@ export default function Home() {
             data.append('file', file);
             try {
               const response = await axios({
-                url: '/api/active/upload',
+                url: '/api/upload',
                 method: 'post',
                 data,
               });
@@ -75,7 +95,7 @@ export default function Home() {
       onConfirm: async () => {
         await axios({
           method: 'post',
-          url: '/api/active/add',
+          url: '/api/submit/1',
           data: {
             work_name: name,
             listen: email,
@@ -119,8 +139,19 @@ export default function Home() {
             onChange={({ target: { value } }) => {
               setEmail(value);
             }}
-            placeholder='请输入你的联系方式，例如：微信：xxxxxx'
+            placeholder='请输入您的邮箱，后续我们将通过邮箱联系您！'
           />
+          <div className={styles.email_code}>
+            <input
+              onChange={({ target: { value } }) => {
+                setEmailCode(value);
+              }}
+              placeholder='请输入验证码！'
+            />
+            <Button disabled={time !== 0} onClick={sendEmail}>
+              {text}
+            </Button>
+          </div>
           <TextArea
             onChange={(value) => {
               setRemark(value);

@@ -21,6 +21,22 @@
     text-indent: 5px;
   }
 
+  .email_code {
+    display: flex;
+
+    input {
+      flex: 2
+    }
+
+    :global {
+      .adm-button {
+        margin-left: 5px;
+        height: 44px;
+        font-size: 14px;
+      }
+    }
+  }
+
   :global {
     .adm-text-area-element {
       margin-bottom: 10px;
