@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import styles from '@/styles/index.module.scss';
+import { postUploadImage, postSendEamil } from '@/api/index';
 import {
   Button,
   Dialog,
@@ -16,7 +17,8 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [emailCode, setEmailCode] = useState('');
 
-  const { text, time, startCountDown } = useCountDown(60);
+  // 倒计时
+  const { text, time } = useCountDown(60);
 
   const [name, setName] = useState('');
   const [remark, setRemark] = useState('');
@@ -24,26 +26,17 @@ export default function Home() {
 
   const sendEmail = () => {
     if (email) {
-      axios({
-        method: 'POST',
-        url: '/api/sendcode',
-        data: {
-          email,
-          emailCode,
-        },
-      }).then(() => {
-        startCountDown();
+      postSendEamil({
+        email,
+        emailCode,
       });
     }
   };
 
   const upload = async (res: File) => {
     return new Promise<ImageUploadItem>((resolve) => {
-      console.log(res);
       const img = new Image();
       img.src = URL.createObjectURL(res);
-
-      console.log(res, img);
 
       img.onload = async () => {
         const canvas = document.createElement('canvas');
@@ -55,19 +48,14 @@ export default function Home() {
           async (blob) => {
             const file = new File(
               [blob as BlobPart],
-              `23123123123.${blob!.type.split('/')[1]}`,
+              `images.${blob!.type.split('/')[1]}`,
               { type: blob!.type }
             );
             const data = new FormData();
             data.append('file', file);
             try {
-              const response = await axios({
-                url: '/api/upload',
-                method: 'post',
-                data,
-              });
-              // console.log(response,`https://www.nfcmdx.top/api/${response.data.url}`)
-              setImgUrl(response.data.url);
+              const response = await postUploadImage(data);
+              setImgUrl(response.data.url1);
               resolve({
                 url: `https://www.nfcmdx.top/images${response.data.url}`,
               });
@@ -83,7 +71,7 @@ export default function Home() {
   };
   const submitInfo = () => {
     // console.log(email,username,remark)
-    if (!username || !email || !imgUrl || !remark) {
+    if (!username || !email || !imgUrl || !remark || !emailCode) {
       Dialog.alert({
         content: '全部内容都要填写哦，检查一下吧！',
       });
@@ -93,22 +81,27 @@ export default function Home() {
       content:
         '上传的内容不得包含色情，反动等违反国家法律的内容，我们将对您上传的内容进行严格审核，确认提交吗？',
       onConfirm: async () => {
-        await axios({
-          method: 'post',
-          url: '/api/submit/1',
-          data: {
-            work_name: name,
-            listen: email,
-            name: username,
-            image_url: imgUrl,
-            remark,
-          },
-        });
-        Toast.show({
-          icon: 'success',
-          content: '提交成功',
-          position: 'bottom',
-        });
+        try {
+          await axios({
+            method: 'post',
+            url: '/api/submit/1',
+            data: {
+              work_name: name,
+              listen: email,
+              name: username,
+              image_url: imgUrl,
+              remark,
+              email_captcha: emailCode,
+            },
+          });
+          Toast.show({
+            icon: 'success',
+            content: '提交成功',
+            position: 'bottom',
+          });
+        } catch (ex) {
+          Toast.show('提交失败');
+        }
       },
     });
   };
@@ -135,23 +128,23 @@ export default function Home() {
             }}
             placeholder='请输入您作品的名字'
           />
-          <input
-            onChange={({ target: { value } }) => {
-              setEmail(value);
-            }}
-            placeholder='请输入您的邮箱，后续我们将通过邮箱联系您！'
-          />
           <div className={styles.email_code}>
             <input
               onChange={({ target: { value } }) => {
-                setEmailCode(value);
+                setEmail(value);
               }}
-              placeholder='请输入验证码！'
+              placeholder='请输入您的邮箱，后续我们将通过邮箱联系您！'
             />
             <Button disabled={time !== 0} onClick={sendEmail}>
               {text}
             </Button>
           </div>
+          <input
+            onChange={({ target: { value } }) => {
+              setEmailCode(value);
+            }}
+            placeholder='请输入验证码！'
+          />
           <TextArea
             onChange={(value) => {
               setRemark(value);
