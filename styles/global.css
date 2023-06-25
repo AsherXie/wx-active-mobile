@@ -1,7 +1,8 @@
 body {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to bottom right, #f0649e, #faa52a, #f0649e, #faa52a, #f0649e);
+
+  /* background: linear-gradient(to bottom right, #f0649e, #faa52a, #f0649e, #faa52a, #f0649e); */
   background-size: 1000% 1000%;
   animation: gradient 20s ease infinite;
 }

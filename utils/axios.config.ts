@@ -85,4 +85,5 @@ class HttpClient {
       .catch((err) => Promise.reject(err));
   }
 }
-export default new HttpClient();
+const httpServer = new HttpClient();
+export default httpServer;

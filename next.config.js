@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ['antd-mobile'],
+  // reactStrictMode: true,
 
-  reactStrictMode: true,
+  reactStrictMode: false,
   async rewrites() {
     return [
       {
